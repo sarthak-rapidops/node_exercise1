@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Table</title>
+    <script src="./JS/table.js" type="application/js"></script>
+</head>
+<body>
+    <!-- INSERT FORM -->
+    <form action="http://localhost:3000/" method="POST" id="insertForm">
+    <input type="text" name="fname" id="fname" placeholder="Firstname" required>
+    <input type="text" name="lname" id="lname" placeholder="Lastname" required>
+    <input type="submit"value="Insert"/>
+    </form>
+
+    <!-- EDIT FORM -->
+    <form action="http://localhost:3000/update" method="POST" id="editForm" hidden>
+        <input type="text" name="fnameOrig" id="fnameOrig" placeholder="Firstname" required hidden>
+        <input type="text" name="lnameOrig" id="lnameOrig" placeholder="Lastname" required hidden>
+        <input type="text" name="fnameEdit" id="fnameEdit" placeholder="Firstname" required>
+        <input type="text" name="lnameEdit" id="lnameEdit" placeholder="Lastname" required>
+        <input type="submit" value="Update"/>
+        </form>
+        
+   <!-- DELETE FORM -->
+   <form action="http://localhost:3000/delete" method="POST" id="deleteForm" hidden>
+    <input type="text" name="fnameDel" id="fnameDel" placeholder="Firstname" required>
+    <input type="text" name="lnameDel" id="lnameDel" placeholder="Lastname" required>
+    <input type="submit" value="delete" id="deleteBtn"/>
+    </form>
+
+    <table border="3px solid black" id="tableMain">
+        <thead>
+            <th>First-name</th>
+            <th>Last-name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+        <% tabled.forEach(element => { %>
+            <tr>
+                <td>
+                    <%= element.firstName%>
+                </td>
+                <td>
+                    <%= element.lastName%>
+                </td>
+                <td><input type="button" value="edit" onclick='{
+                            let rnum = this.parentNode.parentNode.rowIndex;  
+                            document.getElementById("insertForm").hidden=true;
+                            document.getElementById("editForm").hidden=false;
+                            document.getElementById("fnameOrig").value = document.getElementById("tableMain").rows[rnum].cells[0].innerText;
+                            document.getElementById("lnameOrig").value = document.getElementById("tableMain").rows[rnum].cells[1].innerText;
+                            document.getElementById("fnameEdit").value = document.getElementById("tableMain").rows[rnum].cells[0].innerText;
+                            document.getElementById("lnameEdit").value = document.getElementById("tableMain").rows[rnum].cells[1].innerText;
+                }'></td>
+                <td><input type="button" value="delete" onclick='{
+                    let rnum = this.parentNode.parentNode.rowIndex;  
+                            document.getElementById("fnameDel").value = document.getElementById("tableMain").rows[rnum].cells[0].innerText;
+                            document.getElementById("lnameDel").value = document.getElementById("tableMain").rows[rnum].cells[1].innerText;
+                            document.getElementById("deleteBtn").click();
+                }'>
+                </td>
+            </tr>
+        <% });%>
+    </table>
+</body>
+</html>
